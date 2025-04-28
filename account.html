@@ -1,0 +1,96 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Details - Platinum Investors</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 400px;
+      background: white;
+      padding: 20px;
+      margin: 50px auto;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+    }
+
+    .account-info {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .account-info p {
+      font-size: 16px;
+      margin: 10px 0;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>My Account</h2>
+    <p>View and manage your account information here.</p>
+
+    <div class="account-info">
+      <p><strong>Account Holder:</strong> <span id="accountHolder">Loading...</span></p>
+      <p><strong>Account Number:</strong> <span id="accountNumber">Loading...</span></p>
+      <p><strong>Balance:</strong> Ksh.<span id="balance">0.00</span></p>
+    </div>
+
+    <a href="edit-account.html" class="btn">Edit Account Information</a>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email');
+
+    fetch(`/account-details?email=${encodeURIComponent(email)}`)
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('accountHolder').textContent = data.fullName;
+        document.getElementById('accountNumber').textContent = data.accountNumber;
+        document.getElementById('balance').textContent = data.balance.toFixed(2);
+      })
+      .catch(error => {
+        console.error('Error fetching account details:', error);
+      });
+  </script>
+
+</body>
+</html>

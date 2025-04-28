@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fund Your Account</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #172244;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Main Container */
+    .container {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2d3e50;
+      margin-bottom: 20px;
+    }
+
+    /* Tab Navigation */
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      width: 50%;
+      padding: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      border-bottom: 3px solid transparent;
+      text-align: center;
+    }
+
+    .active-tab {
+      border-bottom: 3px solid #007bff;
+      color: #007bff;
+    }
+
+    /* Hide sections initially */
+    .tab-content {
+      display: none;
+    }
+
+    .active-content {
+      display: block;
+    }
+
+    /* Input Fields */
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    /* Button */
+    .btn {
+      background-color: #007bff;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 4px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Fund Your Account</h1>
+
+    <!-- Tab Navigation -->
+    <div class="tabs">
+      <div class="tab active-tab" onclick="showTab('mpesa')">MPesa</div>
+      <div class="tab" onclick="showTab('manual')">Manual</div>
+    </div>
+
+    <!-- MPesa Form -->
+    <div id="mpesa" class="tab-content active-content">
+      <form id="mpesa-form">
+        <div class="form-group">
+          <label for="phoneNumber">MPesa Phone Number:</label>
+          <input type="text" id="phoneNumber" required>
+        </div>
+
+        <div class="form-group">
+          <label for="amount-mpesa">Amount (Ksh):</label>
+          <input type="number" id="amount-mpesa" required>
+        </div>
+
+        <button type="submit" class="btn">Pay with MPesa</button>
+      </form>
+    </div>
+
+    <!-- Manual Investment Form -->
+    <div id="manual" class="tab-content">
+      <form id="manual-form">
+        <div class="form-group">
+          <label for="investment-amount">Investment Amount (Ksh):</label>
+          <input type="number" id="investment-amount" required>
+        </div>
+
+        <div class="form-group">
+          <label for="investment-type">Investment Type:</label>
+          <select id="investment-type" required>
+            <option value="short-term">Short Term</option>
+            <option value="long-term">Long Term</option>
+            <option value="equity">Equity</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn">Add Investment</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Function to switch between MPesa and Manual forms
+    function showTab(tab) {
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active-tab'));
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active-content'));
+
+      document.getElementById(tab).classList.add('active-content');
+      event.target.classList.add('active-tab');
+    }
+
+    // Handle MPesa Form Submission
+    document.getElementById('mpesa-form').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      const amount = document.getElementById('amount-mpesa').value;
+      const email = localStorage.getItem('email');
+
+      if (!email) {
+        alert('Please log in first.');
+        return;
+      }
+
+      const response = await fetch('/fund-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phoneNumber, amount, email }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert('Payment request sent, please approve on your phone.');
+      } else {
+        alert('Failed to send payment request.');
+      }
+    });
+
+    // Handle Manual Investment Submission
+    document.getElementById('manual-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const investmentAmount = document.getElementById('investment-amount').value;
+      const investmentType = document.getElementById('investment-type').value;
+      alert(`You have invested Ksh. ${investmentAmount} in ${investmentType}.`);
+    });
+  </script>
+
+</body>
+</html>

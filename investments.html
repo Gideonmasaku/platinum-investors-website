@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Investments - Platinum Investors</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 450px;
+      background: white;
+      padding: 20px;
+      margin: 50px auto;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+    }
+
+    .investment-info {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+    }
+
+    .investment-info p {
+      font-size: 18px;
+      margin: 10px 0;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 16px;
+      margin-top: 15px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Manage Your Investments</h2>
+    <p>Track your contributions and expected returns in real-time.</p>
+
+    <div class="investment-info">
+      <h3>Total Contributions</h3>
+      <p id="total-contributions">Ksh. 0.00</p>
+    </div>
+
+    <div class="investment-info">
+      <h3>Expected Returns</h3>
+      <p id="expected-returns">Ksh. 0.00</p>
+    </div>
+
+    <button class="btn" onclick="window.location.href='fund.html';">Add Investment</button>
+  </div>
+
+  <script>
+    fetch('/investment-details')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('total-contributions').textContent = `Ksh. ${data.totalContributions.toFixed(2)}`;
+        document.getElementById('expected-returns').textContent = `Ksh. ${data.expectedReturns.toFixed(2)}`;
+      })
+      .catch(error => {
+        console.error('Error fetching investment details:', error);
+      });
+  </script>
+
+</body>
+</html>

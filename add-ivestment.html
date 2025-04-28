@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Investment - Platinum Investors</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 450px;
+      background: white;
+      padding: 20px;
+      margin: 50px auto;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    h2 {
+      color: #333;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 16px;
+      margin-top: 15px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Add New Investment</h2>
+    <p>Increase your investment contributions to grow your wealth.</p>
+
+    <form action="process-investment.html" method="post">
+      
+      <div class="form-group">
+        <label for="amount">Investment Amount (KSh):</label>
+        <input type="number" id="amount" name="amount" required>
+      </div>
+
+      <div class="form-group">
+        <label for="investment-type">Investment Type:</label>
+        <select id="investment-type" name="investment-type" required>
+          <option value="short-term">Short Term</option>
+          <option value="long-term">Long Term</option>
+          <option value="equity">Equity</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description (Optional):</label>
+        <textarea id="description" name="description" placeholder="Add any relevant details"></textarea>
+      </div>
+
+      <button type="submit" class="btn">Add Investment</button>
+    </form>
+  </div>
+
+</body>
+</html>
